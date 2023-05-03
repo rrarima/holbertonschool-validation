@@ -9,4 +9,4 @@ post: ## Create new MarkDown
 	sed -i 's/title: "$(POST_NAME)"/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
 help: ## Display what each command does
-	cat Makefile
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
