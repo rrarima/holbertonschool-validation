@@ -21,6 +21,6 @@ test: ## Test current connection
 help: ## Display what each command does
 	cat Makefile | grep '##' | tr -d '##' | head -n -1
 
-unit-test: ## Run tests to check for HelloHandler coverage
+unit-tests: ## Run tests to check for HelloHandler coverage
 	go test -v -short -coverprofile=coverage-units.out
 
