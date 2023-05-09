@@ -17,10 +17,9 @@ test: ## Test current connection
 	@curl http://localhost:9999
 	@curl http://localhost:9999/health
 
-.SILENT:
-help: ## Display what each command does
-	cat Makefile | grep '##' | tr -d '##' | head -n -1
-
 unit-tests: ## Run tests to check for HelloHandler coverage
 	go test -v -short -coverprofile=coverage-units.out
 
+.SILENT:
+help: ## Display what each command does
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
