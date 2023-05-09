@@ -9,7 +9,8 @@
 - `clean`: stop the application and delete the binary `awesome-api` and the log file `awesome-api.log`.
 - `test`: test the application to ensure that it behaves as expected.
 - `lint`: run the application through lint to check for errors
-- `unit-test`: run tests to check for validation and HelloHandler coverage
+- `unit-tests`: run tests to check for validation and HelloHandler coverage
+
 ## Requirements:
 - A Makefile should be present and valid.
 - The binary `awesome-api` must NOT exist at the beginning, in the source code.
