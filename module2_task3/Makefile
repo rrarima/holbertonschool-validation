@@ -18,7 +18,7 @@ test: ## Test current connection
 	make integration-tests
 
 unit-tests: ## Run tests to check for HelloHandler coverage
-	go test -v -short -coverprofile=coverage-units.out
+	go test -v  -short -coverprofile=coverage-units.out
 
 integration-tests: ## Run tests to check integrations coverage
 	go test -v -coverprofile=coverage-integrations.out
