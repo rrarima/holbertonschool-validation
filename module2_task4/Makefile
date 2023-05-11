@@ -2,6 +2,7 @@ lint: ## lint
 	golangci-lint run ./main.go
 
 build: check ## Build awesome-api
+	hugo
 	go build -o awesome-api
 
 run: ## Run awesome-api application
@@ -9,6 +10,10 @@ run: ## Run awesome-api application
 
 stop: ## Stop awesome-api application
 	kill $$(pgrep awesome-api) || true
+
+post: ## Create new MarkDown
+	hugo new posts/$(POST_NAME).md
+	sed -i 's/title: "$(POST_NAME)"/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
 clean: stop ## Clean awesome-api application and log
 	rm -f awesome-api awesome-api.log coverage-units.out coverage-integrations.out
