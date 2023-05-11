@@ -8,6 +8,9 @@ import (
 )
 
 func Test_HelloHandler(t *testing.T) {
+  if !testing.Short() {
+    t.Skip("Flag `-short` absent: skipping Unit Tests.")
+  }
 
   tests := []struct {
     name         string
@@ -43,11 +46,6 @@ func Test_HelloHandler(t *testing.T) {
 			queryString:  "",
 			responseCode: 200,
 			body:         "Hello there!",
-		},
-		{
-			name:         "",
-			queryString:  "name=",
-			responseCode: 400,
 		},
   }
   for _, tt := range tests {

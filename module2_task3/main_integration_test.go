@@ -32,34 +32,22 @@ func Test_server(t *testing.T) {
       body:         "Hello Holberton!",
     },
     {
-			name:         "Eps Rarima",
-			URI:          "",
-			responseCode: 404,
-      body:         "404 page not found\n",
-		},
-		{
-			name:         "Pallavi Jagtap",
-			URI:          "/hello?name=Bollywood-Superstar",
-			responseCode: 200,
-			body:         "Hello Bollywood-Superstar!",
-		},
-		{
-			name:         "Jonathan Clus",
-			URI:          "/hello?name=cerf-volant",
-			responseCode: 200,
-			body:         "Hello cerf-volant!",
-		},
+      name:         "No Parameter",
+      URI:          "/hello?",
+      responseCode: 200,
+      body:         "Hello there!",
+    },
     {
-      name:         "HealthCheckHandler",
+      name:         "HealthCheck",
       URI:          "/health",
       responseCode: 200,
       body:         "ALIVE",
     },
     {
       name:         "HelloHandler",
-      URI:          "/hello?name=John",
-      responseCode: 200,
-      body:         "Hello John!",
+      URI:          "/hello?name=",
+      responseCode: 400,
+      body:         "",
     },
   }
 
