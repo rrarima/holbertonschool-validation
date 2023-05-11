@@ -4,6 +4,8 @@ lint: ## lint
 build: check ## Build awesome-api
 	hugo
 	go build -o awesome-api
+	npm install markdownlint-cli || true
+	npm install markdown-link-check || true
 
 run: ## Run awesome-api application
 	./awesome-api >./awesome-api.log 2>&1 &
@@ -30,8 +32,8 @@ integration-tests: ## Run tests to check integrations coverage
 	go test -v -coverprofile=coverage-integrations.out
 
 check: ## Check markdown files
-	npm install -g markdownlint-cli ./content/posts/*.md
-	npm install -g markdown-link-check ./content/posts/*.md
+	markdownlint-cli ./content/posts/*.md
+	markdown-link-check ./content/posts/*.md
 
 validate: ## Validate HTML with W3C Validator
 	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
