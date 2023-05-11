@@ -30,8 +30,8 @@ integration-tests: ## Run tests to check integrations coverage
 	go test -v -coverprofile=coverage-integrations.out
 
 check: ## Check markdown files
-	npx markdownlint-cli ./content/posts/*.md
-	npx markdown-link-check ./content/posts/*.md
+	npm markdownlint-cli ./content/posts/*.md
+	npm markdown-link-check ./content/posts/*.md
 
 validate: ## Validate HTML with W3C Validator
 	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
