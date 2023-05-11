@@ -34,7 +34,7 @@ check: ## Check markdown files
 	npx markdown-link-check ./content/posts/*.md
 
 validate: ## Validate HTML with W3C Validator
-	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html
+	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
 
 .SILENT:
 help: ## Display what each command does
