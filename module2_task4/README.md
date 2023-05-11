@@ -11,6 +11,8 @@
 - `lint`: run the application through lint to check for errors
 - `unit-tests`: run tests to check for validation and HelloHandler coverage
 - `integration-tests`: run tests to check for integration coverage
+- `check`: Check markdown files exist in the /content/*
+- `validate`: Validate html format
 
 ## Requirements:
 - A Makefile should be present and valid.
