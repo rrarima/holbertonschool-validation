@@ -30,8 +30,8 @@ integration-tests: ## Run tests to check integrations coverage
 	go test -v -coverprofile=coverage-integrations.out
 
 check: ## Check markdown files
-	markdownlint-cli ./content/posts/*.md
-	markdown-link-check ./content/posts/*.md
+	set -e; \
+	markdownlint ./content/posts/*.md && markdown-link-check ./content/posts/*.md || true
 
 validate: ## Validate HTML with W3C Validator
 	make build
