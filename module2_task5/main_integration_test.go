@@ -22,8 +22,8 @@ func Test_server(t *testing.T) {
     {
       name:         "Home page",
       URI:          "",
-      responseCode: 404,
-      body:         "404 page not found\n",
+      responseCode: 200,
+      body:         "",
     },
     {
       name:         "Hello page",
