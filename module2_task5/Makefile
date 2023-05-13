@@ -16,7 +16,8 @@ post: ## Create new MarkDown
 	sed -i 's/title: "$(POST_NAME)"/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
 clean: stop ## Clean awesome-api application and log
-	rm -rf awesome-api awesome-api.log coverage* go* ./dist
+	rm -f awesome-api awesome-api.log coverage-units.out coverage-integrations.out
+	rm -rf ./dist
 
 test: ## Test current connection
 	make unit-tests
