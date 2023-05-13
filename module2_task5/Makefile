@@ -20,6 +20,7 @@ clean: stop ## Clean awesome-api application and log
 	rm -rf ./dist
 
 test: ## Test current connection
+	make build
 	make unit-tests
 	make integration-tests
 
