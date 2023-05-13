@@ -1,8 +1,9 @@
 lint: ## lint
 	golangci-lint run ./main.go
 
-build: check ## Build awesome-api
-	hugo -d dist/
+build: ## Build awesome-api
+	make go-build
+	make hugo-build
 
 run: ## Run awesome-api application
 	./awesome-api >./awesome-api.log 2>&1 &

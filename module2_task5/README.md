@@ -15,6 +15,7 @@
 - `validate`: Validate html format
 - `go-build`: Build API library
 - `hugo-build`: Build go hugo website
+- `post`: Creat new Markdown file
 
 ## Requirements:
 - A Makefile should be present and valid.
