@@ -34,7 +34,7 @@ check: ## Check markdown files
 
 validate: ## Validate HTML with W3C Validator
 	make build
-	./w3c_validator.py ./dist/index.html || true
+	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
 
 .SILENT:
 help: ## Display what each command does
