@@ -2,8 +2,7 @@ lint: ## lint
 	golangci-lint run ./main.go
 
 build: check ## Build awesome-api
-	hugo
-	go build -o awesome-api
+	hugo -d dist/
 
 run: ## Run awesome-api application
 	./awesome-api >./awesome-api.log 2>&1 &
@@ -35,7 +34,7 @@ check: ## Check markdown files
 
 validate: ## Validate HTML with W3C Validator
 	make build
-	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
+	w3c_validator.py ./dist/index.html || true
 
 .SILENT:
 help: ## Display what each command does
