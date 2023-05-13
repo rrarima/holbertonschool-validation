@@ -1,7 +1,7 @@
 lint: ## lint
 	golangci-lint run ./main.go
 
-build: check ## Build awesome-api
+build: ## Build awesome-api
 	make go-build
 	make hugo-build
 
