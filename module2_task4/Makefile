@@ -4,8 +4,6 @@ lint: ## lint
 build: check ## Build awesome-api
 	hugo
 	go build -o awesome-api
-	npm install markdownlint-cli || true
-	npm install markdown-link-check || true
 
 run: ## Run awesome-api application
 	./awesome-api >./awesome-api.log 2>&1 &
@@ -36,7 +34,10 @@ check: ## Check markdown files
 	markdown-link-check ./content/posts/*.md
 
 validate: ## Validate HTML with W3C Validator
-	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
+	make build
+	-git clone https://github.com/holbertonschool/W3C-Validator.git
+	-./W3C-Validator/w3c_validator.py ./dist/index.html
+	-rm -rf ./W3C-Validator
 
 .SILENT:
 help: ## Display what each command does
