@@ -1,53 +1,50 @@
-go-build:	## Builds the API binary file using go
-	@go mod init github.com/holbertonschool-validation/tree/main/module2_task5/awesome-api
-	@go get github.com/gorilla/mux
-	@go build
+lint: ## lint
+	golangci-lint run ./main.go
 
-hugo-build: check ## Build the website using gohugo on the dist folder
-	@hugo -d dist/
+build: ## Build awesome-api
+	make go-build
+	make hugo-build
 
-build:	## Builds with go and hugo
-	@make go-build
-	@make hugo-build
+run: ## Run awesome-api application
+	./awesome-api >./awesome-api.log 2>&1 &
 
-check: ## Check markdown files for any syntax mistake
-	@markdownlint ./content/posts/*.md
-	@markdown-link-check ./content/posts/*.md
+stop: ## Stop awesome-api application
+	kill $$(pgrep awesome-api) || true
 
-post: ## Create a new blog post
-	@hugo new posts/${POST_NAME}.md
-	@sed -i "s/title: .*/title: ${POST_TITLE}/" ./content/posts/${POST_NAME}.md
+post: ## Create new MarkDown
+	hugo new posts/$(POST_NAME).md
+	sed -i 's/title: "$(POST_NAME)"/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
-validate: ## W3C validator
+clean: stop ## Clean awesome-api application and log
+	rm -f awesome-api awesome-api.log coverage-units.out coverage-integrations.out
+	rm -rf ./dist
+
+test: ## Test current connection
+	make unit-tests
+	make integration-tests
+
+unit-tests: ## Run tests to check for HelloHandler coverage
+	go test -v  -short -coverprofile=coverage-units.out
+
+integration-tests: ## Run tests to check integrations coverage
+	go test -v -coverprofile=coverage-integrations.out
+
+check: ## Check markdown files
+	markdownlint ./content/posts/*.md
+	markdown-link-check ./content/posts/*.md
+
+validate: ## Validate HTML with W3C Validator
 	make build
-	-git clone https://github.com/holbertonschool/W3C-Validator.git
-	-./W3C-Validator/w3c_validator.py ./dist/index.html
-	-rm -rf ./w3c_validator
+	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
 
-run: ## Runs the program
-	@./awesome-api >./awesome.log 2>&1 &
+go-build:	## Build API library
+	go mod init github.com/holbertonschool-validation/tree/main/module2_task5/awesome-api
+	go get github.com/gorilla/mux
+	go build
 
-stop: ## Kills awesome-api's current process
-	@kill "$(shell pgrep awesome-api)" 2>/dev/null &
+hugo-build: check ## Build go hugo website
+	hugo -d dist/
 
-clean: ## Delete the binary done with build command
-	@make -s stop
-	@-rm -rf awesome-api awesome.log coverage* go* ./dist
-
-test: ## Tests if the website is currently running properly
-	@-make build
-	@make unit-tests
-	@make integration-tests
-
-lint: ## Helps to make a lint on the files
-	@golangci-lint run
-
-unit-tests: ## Runs the unit testy
-	@go test -v -short -coverprofile=coverage-units.out
-
-integration-tests: ## make unit tests on the files
-	@go test -v -coverprofile=coverage-integrations.out
-
-help: ## Show commands usage information
-	@echo "Available targets:"
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//' | awk '{ printf "  %-20s %s\n", $$1, $$2 }'
+.SILENT:
+help: ## Display what each command does
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
