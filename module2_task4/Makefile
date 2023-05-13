@@ -29,12 +29,12 @@ integration-tests: ## Run tests to check integrations coverage
 	go test -v -coverprofile=coverage-integrations.out
 
 check: ## Check markdown files
-	set -e; \
-	markdownlint ./content/posts/*.md && markdown-link-check ./content/posts/*.md || true
+	markdownlint ./content/posts/*.md
+	markdown-link-check ./content/posts/*.md
 
 validate: ## Validate HTML with W3C Validator
 	make build
-	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
+	./w3c_validator.py ./dist/index.html || true
 
 .SILENT:
 help: ## Display what each command does
