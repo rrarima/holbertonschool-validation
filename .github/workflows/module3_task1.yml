@@ -24,3 +24,13 @@ jobs:
           cd module3_task1
           make build
 
+      - name: Initialise a post with "make post"
+        run: |
+          cd module3_task1
+          make POST_TITLE="Yoza" POST_NAME="Eps" post
+
+      - name: Initialise a clean with "make clean"
+        run: |
+          cd module3_task1
+          make clean
+
