@@ -1,0 +1,26 @@
+name: module3_task0
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  module3_task0:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install required tools
+        run: |
+          cd module3_task1
+          chmod u+x setup.sh
+          sudo ./setup.sh
+
+      - name: Initialise a build with "make build"
+        run: |
+          cd module3_task1
+          make build
+
