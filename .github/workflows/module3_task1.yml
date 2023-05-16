@@ -14,7 +14,8 @@
       steps:
         - uses: actions/checkout@v3
         - name: installation setup with hugo
-          run: cd module3_task1 && chmod u+x setup.sh && ./setup.sh
+          run: | 
+            cd module3_task1/ && chmod u+x setup.sh && ./setup.sh
         - name: check makefile access and execute make
           run: |
             make help
