@@ -5,12 +5,12 @@
         - master
     schedule:
       - cron: '0 0 * * *'
-  
+
   jobs:
     builds:
       name: module3_task1
       runs-on: ubuntu-22.04
-  
+
       steps:
         - uses: actions/checkout@v3
         - name: installation setup with hugo
