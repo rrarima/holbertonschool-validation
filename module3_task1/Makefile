@@ -13,3 +13,6 @@ help: ## Display what each command does
 
 run: ## Run awesome-api application
 	./awesome-api >./awesome-api.log 2>&1 &
+
+stop: ## Stop awesome-api application
+	kill $$(pgrep awesome-api) || true
