@@ -1,0 +1,25 @@
+  name: module3_task1
+  on:
+    push:
+      branches:
+        - master
+    schedule:
+      - cron: '0 0 * * *'
+  
+  jobs:
+    builds:
+      name: module3_task1
+      runs-on: ubuntu-22.04
+  
+      steps:
+        - uses: actions/checkout@v3
+        - name: installation setup with hugo
+          run: cd module3_task1 && ./setup.sh
+        - name: check makefile access and execute make
+          run: |
+            make help
+            make build
+            make run
+            make stop
+            make clean
+          working-directory: module3_task1
