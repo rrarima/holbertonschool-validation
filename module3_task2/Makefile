@@ -19,7 +19,7 @@ clean: stop ## Clean awesome-api application and log
 	rm -f awesome-api awesome-api.log coverage-units.out coverage-integrations.out go*
 	rm -rf ./dist
 
-test: ## Test current connection
+test: go-build ## Test current connection
 	make unit-tests
 	make integration-tests
 	make validate
