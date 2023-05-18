@@ -13,7 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: installation setup with hugo
-        run: cd module3_task2 && ./setup.sh
+        run: |
+          cd module3_task2 &&
+          chmod u+x setup.sh
+          sudo ./setup.sh
       - name: check makefile access and execute make
         run: |
           make help
