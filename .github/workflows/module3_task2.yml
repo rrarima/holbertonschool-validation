@@ -26,7 +26,7 @@ jobs:
           make stop
           make clean
         working-directory: module3_task2
-      
+
       - name: create zip file with make package
         run: |
           cd module3_task2 && make package
