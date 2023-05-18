@@ -14,13 +14,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: installation setup with hugo
         run: |
-          cd module3_task1/
-          chmod u+x setup.sh
-          sudo ./setup.sh
+          cd module3_task2 && ./setup.sh
       - name: check makefile access and execute make
         run: |
           make help
           make build
+          make lint
           make run
           make stop
           make clean
