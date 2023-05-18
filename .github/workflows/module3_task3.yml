@@ -11,6 +11,7 @@ name: module3_task3
 
 jobs:
   builds:
+    permissions: write-all
     name: module3_task3
     runs-on: ubuntu-22.04
 
@@ -63,4 +64,4 @@ jobs:
             # How do I make a new release using a tag
             # What's in the zip file and how do I open it
       - run: gh release create v1.0.0 --title "v1.0.0"
-          --notes DEPLOY.md 2>/dev/null || echo "OK"
+            --notes DEPLOY.md 2>/dev/null || echo "OK"
