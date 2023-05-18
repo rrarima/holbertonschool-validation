@@ -32,13 +32,13 @@ integration-tests: ## Run tests to check integrations coverage
 
 check: ## Check markdown files
 	markdownlint ./content/posts/*.md
-	markdown-link-check ./content/posts/*.md
+	find content -name \*.md -print0 | xargs -0 -n1 markdown-link-check
 
 validate: ## Validate HTML with W3C Validator
 	python3 ./w3c_validator.py ./dist/index.html || true
 
 go-build:	## Build API library
-	go mod init github.com/holbertonschool-validation/tree/main/module2_task5/awesome-api
+	go mod init github.com/holbertonschool-validation/tree/main/module3_task2/awesome-api
 	go get github.com/gorilla/mux
 	go build
 
