@@ -39,9 +39,9 @@ jobs:
           cd module3_task3/awesome-api && make unit-tests
           cd module3_task3/awesome-api && make integration-tests
           cd module3_task3 && make validate
-      - name: Archive zip file if the tests pass
+      - name: Package zip file if the tests pass
         run: |
-          cd module3_task3 && make archive
+          cd module3_task3 && make package
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
