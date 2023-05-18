@@ -32,11 +32,13 @@ jobs:
           cd module3_task2 && make package
       - name: run tests
         run: |
-          cd module3_task2 && make test
+          cd module3_task2 && make unit-tests
+          cd module3_task2 && make integration-tests
+          cd module3_task2 && make validate
       - name: Archive zip file if the tests pass
         if: ${{github.ref=='refs/heads/master'}}
         uses: actions/upload-artifact@v3
         with:
           name: Save zip file
-          path: |
+          path: module3_task2/awesome-website.zip
             cd module3_task2 && make package
