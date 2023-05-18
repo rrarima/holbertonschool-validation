@@ -1,0 +1,41 @@
+---
+name: module3_task2
+"on":
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  builds:
+    name: module3_task2
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: installation setup with hugo
+        run: |
+          cd module3_task1/
+          chmod u+x setup.sh
+          sudo ./setup.sh
+      - name: check makefile access and execute make
+        run: |
+          make help
+          make build
+          make run
+          make stop
+          make clean
+        working-directory: module3_task2
+      
+      - name: create zip file with make package
+        run: |
+          cd module3_task2 && make package
+      - name: run tests
+        run: |
+          cd module3_task2 && make test
+      - name: Archive zip file if the tests pass
+        if: ${{github.ref=='refs/heads/main'}}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Save zip file
+          path: |
+            cd module3_task2 && make package
