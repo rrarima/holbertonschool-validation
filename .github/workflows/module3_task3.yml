@@ -37,11 +37,11 @@ jobs:
           make package
       - name: run tests
         run: |
-          cd module3_task3/awesome-api
-          make unit-tests
-          cd module3_task3/awesome-api
-          make integration-tests
           cd module3_task3
+          cd awesome-api
+          make unit-tests
+          make integration-tests
+          cd ..
           make validate
       - name: Package zip file if the tests pass
         run: |
