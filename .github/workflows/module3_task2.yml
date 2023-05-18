@@ -32,8 +32,8 @@ jobs:
           cd module3_task2 && make package
       - name: run tests
         run: |
-          cd module3_task2 && make unit-tests
-          cd module3_task2 && make integration-tests
+          cd module3_task2/awesome-api && make unit-tests
+          cd module3_task2/awesome-api && make integration-tests
           cd module3_task2 && make validate
       - name: Archive zip file if the tests pass
         if: ${{github.ref=='refs/heads/master'}}
