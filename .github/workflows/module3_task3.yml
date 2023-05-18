@@ -1,9 +1,8 @@
----
 name: module3_task3
-"on":
+on:
   push:
     tags:
-      - '1.0.0'
+      - '*'
   schedule:
     - cron: '0 0 * * *'
 
@@ -38,29 +37,25 @@ jobs:
           cd module3_task3/awesome-api && make integration-tests
           cd module3_task3 && make validate
       - name: Archive zip file if the tests pass
-        if: ${{github.ref=='refs/heads/master'}}
+        if: ${{ github.ref == 'refs/tags/1.0.0' }}
         uses: actions/upload-artifact@v3
         with:
           name: Save zip file
           path: module3_task3/awesome-website.zip
       - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/')
+        if: ${{ github.ref == 'refs/tags/1.0.0' }}
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body_path: ./module3_task3/DEPLOY.md
-          draft: false
+          files: module3_task3/awesome-website.zip
+          tag_name: 1.0.0
+          body: |
+            $(cat ./module3_task3/DEPLOY.md)
           prerelease: false
       - name: Upload Release Asset
-        if: startsWith(github.ref, 'refs/tags/')
+        if: ${{ github.ref == 'refs/tags/1.0.0' }}
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./module3_task3/awesome-website.zip
