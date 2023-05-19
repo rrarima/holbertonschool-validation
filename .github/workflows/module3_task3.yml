@@ -64,4 +64,3 @@ jobs:
             # How can I check if the app is running
             # How do I make a new release using a tag
             # What's in the zip file and how do I open it
-      - run: gh release create v1.0.0 --title "v1.0.0"
