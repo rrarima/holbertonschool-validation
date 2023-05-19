@@ -50,7 +50,7 @@ jobs:
           path: |
             module3_task3/dist/awesome-website.zip
       - name: make Release.txt
-        run: cat /module3_task3/DEPLOY.md >> Release.txt
+        run: cat ./module3_task3/DEPLOY.md >> Release.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
