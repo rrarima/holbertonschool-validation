@@ -11,7 +11,6 @@ name: module3_task3
 
 jobs:
   builds:
-    permissions: write-all
     name: module3_task3
     runs-on: ubuntu-22.04
 
@@ -19,9 +18,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: installation setup with hugo
         run: |
-          cd module3_task3 &&
           chmod u+x setup.sh
           sudo ./setup.sh
+        working-directory: module3_task3
 
       - name: check makefile access and execute make
         run: |
@@ -30,20 +29,24 @@ jobs:
           make run
           make stop
           make clean
+        working-directory: module3_task3
 
       - name: create zip file with make package
         run: |
-          cd module3_task3 && make package
+          make package
+        working-directory: module3_task3
 
       - name: run tests
         run: |
-          cd module3_task3/awesome-api && make unit-tests
-          cd module3_task3/awesome-api && make integration-tests
-          cd module3_task3 && make validate
+          make unit-tests
+          make integration-tests
+          make validate
+        working-directory: module3_task3
 
       - name: Package zip file if the tests pass
         run: |
-          cd module3_task3 && make package
+          make package
+        working-directory: module3_task3
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
