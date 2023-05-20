@@ -34,17 +34,17 @@ jobs:
 
       - name: create zip file with make package
         run: |
-          make -C module3_task3 package
+          cd module3_task3 && make package
       - name: run tests
         run: |
-          make -C module3_task3/awesome-api unit-tests
-          make -C module3_task3/awesome-api integration-tests
-          make -C module3_task3 validate
+          cd module3_task3/awesome-api && make unit-tests
+          cd module3_task3/awesome-api && make integration-tests
+          cd module3_task3 && make validate
       - name: Package zip file if the tests pass
-        run: make -C module3_task3 package
+        run: |
+          cd module3_task3 && make package
       - name: List files
         run: ls -l
-
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
