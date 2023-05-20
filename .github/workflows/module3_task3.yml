@@ -11,6 +11,7 @@ name: module3_task3
 
 jobs:
   builds:
+    permissions: write-all
     name: module3_task3
     runs-on: ubuntu-22.04
 
@@ -18,12 +19,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: installation setup with hugo
         run: |
+          cd module3_task3 &&
           chmod u+x setup.sh
           sudo ./setup.sh
-        working-directory: module3_task3
-
       - name: check makefile access and execute make
         run: |
+          make help
           make build
           make lint
           make run
@@ -33,31 +34,29 @@ jobs:
 
       - name: create zip file with make package
         run: |
-          make package
-        working-directory: module3_task3
-
+          make -C module3_task3 package
       - name: run tests
         run: |
-          make unit-tests
-          make integration-tests
-          make validate
-        working-directory: module3_task3
-
+          make -C module3_task3/awesome-api unit-tests
+          make -C module3_task3/awesome-api integration-tests
+          make -C module3_task3 validate
       - name: Package zip file if the tests pass
-        run: |
-          make package
-        working-directory: module3_task3
+        run: make -C module3_task3 package
+      - name: List files
+        run: ls -l
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: Save zip file
-          path: module3_task3/awesome-website.zip
+          path: |
+            module3_task3/awesome-website.zip
+      - name: make Release.txt
+        run: cat ./module3_task3/DEPLOY.md >> Release.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/1.0.0')
         with:
-          files: |
-            module3_task3/DEPLOY.md
-            module3_task3/awesome-website.zip
+          files: module3_task3/awesome-website.zip
+          body_path: module3_task3/DEPLOY.md
