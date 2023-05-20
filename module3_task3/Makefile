@@ -46,7 +46,7 @@ hugo-build: check ## Build go hugo website
 	hugo -d dist/
 
 package:	## Create awesome-website.zip that includes the awesome-api and dist directory
-	zip -FSr awesome-website.zip . -i dist/ awesome-api
+	zip -FSr awesome-website.zip . -i awesome-api
 
 .SILENT:
 help: ## Display what each command does
