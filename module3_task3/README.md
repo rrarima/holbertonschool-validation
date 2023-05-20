@@ -1,6 +1,8 @@
 # DevOps Automation Project
 
-This project aims at demonstrating the value of a DevOps mindset in a software project by focusing on automation, decreasing manual work, and increasing development speed.
+This project aims at demonstrating the value of a DevOps mindset in a software
+project by focusing on automation, decreasing manual work, and increasing
+development speed.
 
 ## Learning Objectives
 
@@ -37,7 +39,10 @@ This project needs the following tools / services:
 
 ## Project Scenario
 
-You are a software engineer at "Awesome Inc." working on their web services. Your goal is to help the company grow a culture of collaboration with a technical mindset while managing their existing web services, in line with the DevOps philosophy.
+You are a software engineer at "Awesome Inc." working on their web services.
+Your goal is to help the company grow a culture of collaboration with a
+technical mindset while managing their existing web services, in line with the
+DevOps philosophy.
 
 ## Reference Readings / Watching
 
@@ -47,10 +52,10 @@ You are a software engineer at "Awesome Inc." working on their web services. You
 - [Installing & Using Themes](https://gohugo.io/themes/installing-and-using-themes/)
 - [Add a help target to a Makefile](https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html)
 
-
 ## Lifecycle of a Hugo Website with Makefile
 
-This guide demonstrates the lifecycle of a Hugo website using a Makefile to automate common tasks.
+This guide demonstrates the lifecycle of a Hugo website using a Makefile to
+automate common tasks.
 
 ## Requirements
 
@@ -63,7 +68,8 @@ This guide demonstrates the lifecycle of a Hugo website using a Makefile to auto
 
 ## Step 1: Create a new post
 
-To create a new post, use the `post` command in the Makefile. Replace `POST_NAME` with the desired file name and `POST_TITLE` with the desired title:
+To create a new post, use the `post` command in the Makefile. Replace
+`POST_NAME` with the desired file name and `POST_TITLE` with the desired title:
 
 ```bash
 make post POST_NAME=my-new-post POST_TITLE="My New Post"
