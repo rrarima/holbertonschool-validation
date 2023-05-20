@@ -24,8 +24,8 @@ jobs:
 
       - name: check makefile access and execute make
         run: |
-          make lint
           make build
+          make lint
 
       - name: create zip file with make package
         run: |
