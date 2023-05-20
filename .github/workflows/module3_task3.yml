@@ -10,7 +10,8 @@ name: module3_task3
     - cron: '0 0 * * *'
 
 jobs:
-  build:
+  builds:
+    permissions: write-all
     name: module3_task3
     runs-on: ubuntu-22.04
 
@@ -20,12 +21,16 @@ jobs:
         run: |
           cd module3_task3 &&
           chmod u+x setup.sh
-          ./setup.sh
+          sudo ./setup.sh
 
       - name: check makefile access and execute make
         run: |
           make build
           make lint
+          make run
+          make stop
+          make clean
+        working-directory: module3_task3
 
       - name: create zip file with make package
         run: |
