@@ -24,7 +24,6 @@ jobs:
           sudo ./setup.sh
       - name: check makefile access and execute make
         run: |
-          make help
           make build
           make lint
           make run
@@ -54,8 +53,6 @@ jobs:
           name: Save zip file
           path: |
             module3_task3/awesome-website.zip
-      - name: make Release.txt
-        run: cat ./module3_task3/DEPLOY.md >> Release.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -64,9 +61,3 @@ jobs:
           files: |
             module3_task3/awesome-website.zip
             module3_task3/DEPLOY.md
-          body: |
-            # Generate an archive when triggered by a tag
-            # How can I check if the app is running
-            # How do I make a new release using a tag
-            # What's in the zip file and how do I open it
-            # DEPLOY
