@@ -1,75 +1,135 @@
-# DevOps Automation Project
+<h1 align="center"> Module 2: Testing in the Software Development Methodology
 
-This project aims at demonstrating the value of a DevOps mindset in a software
-project by focusing on automation, decreasing manual work, and increasing
-development speed.
+# Learning Objectives
+This project aims at practicing with automated tests. The goal is to understand the pros and cons of different testing methods to be able to understand the value of doing, or not doing, a kind of test.
 
-## Learning Objectives
+After this project, you should be able to:
 
-By the end of this project, you should be able to:
-
-- Understand the value of automating tedious tasks
-- Define a development lifecycle
-- Automate shell-like tasks with Make, and/or shell script
-- Be aware of tools dependencies and the value of reproducing environments
-- Build static HTML websites from Markdown code using Go-Hugo
+Understand what linting is the extent of its usages (which kind of file can be linted, and the impact of running it often)
+Understand the difference between unit tests and integration tests
+Use code coverage as a helper to write tests
+Understand that not only “classical” code is to be tested, but also a lot of the artifacts we can generate
+Understand how “component”-based testing for acceptance and end to end validation is to be used
 
 ## Prerequisites
+
+The following elements are required in addition to the previous module (“Module 1: Introduction to DevOps: Automate Everything to Focus on What Really Matters”) prerequisites.:
 
 ### Concepts
 
 You should have a basic knowledge of the following concepts:
 
-- Shell terminal basics, using command lines
-- Git with the command line (and also a graphical interface)
-- Make/Makefile usage
+- What a compiled language is (C/C#/Golang/Rust/etc.)
+
+	- Generation process from source to executable binary
+	- Basic types: string, integer, boolean, maps, arrays
+	- Basic algorithmic: loops, conditional, functions
+	
+- Installing command line tools with NPM (in addition to package managers)
+
+- Understand the basics of the HTTP protocol (client/server, verbs, headers)
 
 ### Tooling
 
 This project needs the following tools / services:
 
-- An HTML5-compliant web browser
-- A free account on GitHub, referenced as `<GitHub Handle>`
-- A shell terminal with bash, zsh, or ksh, including the standard Unix toolset
-- GNU Make v3.81+
-- Git (command line) v2+
-- Go Hugo v0.84+ (crucial for the theme you'll use)
-- Ability to spawn a clean Ubuntu 18.04 system (Docker is recommended)
-- A text editor or IDE of your convenience
+- An HTML5-compliant web browser (Firefox, Chrome, Opera, Safari, Edge, etc.)
+- A free account on [GitHub](https://github.com/), referenced as `GitHub Handle`
+- A shell terminal with bash, zsh or ksh, including the standard Unix toolset (ls, cd, etc.)
+- [GNU](https://www.gnu.org/software/make/) Make in version 3.81+
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-The-Command-Line) (command line) in version 2+
+- [Go Hugo](https://gohugo.io/) v0.84+
+- [Golang](https://intranet.hbtn.io/rltoken/5ypbIenKj6LiymRm619--A) v1.15.*
+- [NPM](https://intranet.hbtn.io/rltoken/RcU82lwHHO4xEQCtWEv1sg)v7 + [NodeJS](https://intranet.hbtn.io/rltoken/XWIqoQhjv16uVWfGbCdInw) v14.*
+- [markdownlint-cli](https://intranet.hbtn.io/rltoken/hplwMW8M8BKVQyhDso0pOw) v0.26.0
+- [markdown-link-check](https://intranet.hbtn.io/rltoken/BRJGBHXvkAUKt50KrFOm0A) v3.8.6
+- [Holberton's W3C Validator](https://intranet.hbtn.io/rltoken/ll8gJ8CPoI9tfn1OTDE8rA)
+- [yq](https://intranet.hbtn.io/rltoken/9wlxJjlqCE6XyPa6TQ0RsQ) v4.5.0
+- [shellcheck](https://intranet.hbtn.io/rltoken/7e95a2wDfOHFQGKJqRlHgg) v0.*
+- [yamllint](https://intranet.hbtn.io/rltoken/B1BZ_C_5ANyq005Vd0LWNw) v1.*
+- [jq](https://intranet.hbtn.io/rltoken/pVjsOvuSQavip_1Y4u--4Q) v1.*
 
-## Project Scenario
 
-You are a software engineer at "Awesome Inc." working on their web services.
-Your goal is to help the company grow a culture of collaboration with a
-technical mindset while managing their existing web services, in line with the
-DevOps philosophy.
+<h1 align="center"> How to use the make file:
 
-## Reference Readings / Watching
+## Lifecycle
 
-- [Go Hugo Quickstart](https://gohugo.io/getting-started/quick-start/)
-- [Git SCM Book](https://git-scm.com/book/en/v2)
-- [GNU Make Docs](https://www.gnu.org/software/make/manual/make.html)
-- [Installing & Using Themes](https://gohugo.io/themes/installing-and-using-themes/)
-- [Add a help target to a Makefile](https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html)
+In the DevOps methodology, the development lifecycle is generally staying the same. Use the following steps :
 
-## Lifecycle of a Hugo Website with Makefile
+To execute the Makefile use the following syntax:
+ ```make <command>```
 
-This guide demonstrates the lifecycle of a Hugo website using a Makefile to
-automate common tasks.
+ command are availaible :
+* `help`:
+    - show all command description
 
-## Requirements
+* `hugo-build`:
+    - Builds a new version of the website to folder `/dist/` 
+ 
+* `go-build`:
+	- compile the source code of the application to a binary named ```awesome-api``` (the name ```awesome-api``` comes from the command ```go mod init github.com/<your github handle>/awesome-api```) with the command go build. The first build may takes some times. Build run only if lint is not failed.
 
-1. [Hugo](https://gohugo.io/getting-started/installing/)
-2. A Makefile with the following commands:
-    - `build`: Build the website
-    - `clean`: Clean the `dist` directory
-    - `post`: Create a new Markdown post
-    - `help`: Display information about the available commands
+* `build`:
+	- execute `hugo-build` AND `go-build`
 
-## Step 1: Create a new post
+* `hugo-clean`:
+    - Removes the contents the folder  `/dist/`
 
-To create a new post, use the `post` command in the Makefile. Replace
-`POST_NAME` with the desired file name and `POST_TITLE` with the desired title:
+* `go-clean`:
+	- Stop the application. Delete the binary ```awesome-api``` and the log file ```awesome-api.log```
 
-```bash
-make post POST_NAME=my-new-post POST_TITLE="My New Post"
+* `clean`:
+	- execute `hugo-clean` AND `go-clean`
+
+* `post`:
+    - Creates a new post in the contents/post folder with POST_TITLE and POST_NAME set from the ENV variables.
+
+* `check`:
+	- Lint of the Markdown source files using command line AND analysis of the links with command line. If one test fails, the command failed.
+ 
+* `validate`:
+	- validate the file ./dist/index.html by using command line. But non-blocking quality indicator
+
+* `test`: Test to ensure that it behaves as expected. 
+
+* `lint`: Test lint in the files
+
+* `unit-tests`: Run files with the _test.go suffix 
+
+* `integration-tests`: Run Golang integration tests 
+
+* `run`: Run the application in background by executing the binary ```awesome-api```, and write logs into a file named ```awesome-api.log```
+
+* `stop`: Stop the application with the command kill XXXXX where XXXXX is the Process ID of the application.
+
+## Workflow
+
+* Workflow module3_task 0 : 
+-> Clone the repository,
+-> Use ubuntu-22.04 as the virtual machine.
+-> Position yourself in the correct directory and execute the command make help to validate that the Makefile is present and implements the help target.
+-> This workflow must be triggered:
+		Each time there is new code pushed on your repository,
+		And once per day (whatever time you want).
+
+* Workflow module3_task 1 : 
+-> Ensure that the workflow is executed into an Ubuntu 22.04
+-> install with script setup.sh
+-> 1 job with at least 7 steps (checkout, running setup.sh and then the 5 make commands)
+
+* Workflow module3_task 2 :
+same as previous 
++ target package to generate ZIP file
++ archive ZIP file if tests and validation have run successfully
+
+* Workflow module3_task 3 :
+same as previous
++ Generate an archive when triggered by a tag
++ Create a release with the archive and content of ```DEPLOY.md``` when triggered by a tag
++ Behave the same as “module3_task2” when triggered by something else than a tag (e.g. archive without version name, and no release)
++ Be enabled in GitHub Actions and must have been run successfully with a tag ```1.0.0```
+
+# Story
+Continuing your journey as a Software Engineer at Awesome Inc., you want to provide early visibility on your work to your colleagues to allow you to iterate on the most important issues or improvements for the company.
+
+By defining a Software Delivery Pipeline with automated tasks, you’ll ensure that the collaboration between teams is improved, and that your team grows in maturity while providing an efficient process to ensure that you can deliver the application often.
