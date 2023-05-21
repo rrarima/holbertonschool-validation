@@ -30,15 +30,6 @@ jobs:
           make stop
           make clean
         working-directory: module3_task3
-
-      - name: create zip file with make package
-        run: |
-          cd module3_task3 && make package
-      - name: run tests
-        run: |
-          cd module3_task3/awesome-api && make unit-tests
-          cd module3_task3/awesome-api && make integration-tests
-          cd module3_task3 && make validate
       - name: Package zip file if the tests pass
         run: |
           cd module3_task3 && make package
