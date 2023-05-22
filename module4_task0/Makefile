@@ -2,8 +2,11 @@ lint: ## lint
 	markdownlint -f DEPLOY.md README.md || true
 
 build: ## Build awesome-api
-	hugo
-	touch awesome-api
+	docker run --rm --tty --volume=`pwd`:/app --workdir=/app golang:1.15.8-buster sh -c "./setup.sh make lint \
+	&& go mod tidy \
+	&& make check \
+	&& hugo \
+	&& go build -o awesome-api"
 
 run: ## Run awesome-api application
 	./awesome-api >./awesome-api.log 2>&1 &
@@ -19,10 +22,10 @@ clean: stop ## Clean awesome-api application and log
 	rm -f awesome-api awesome-api.log coverage-units.out coverage-integrations.out go*
 	rm -rf ./dist
 
-test: go-build ## Test current connection
-	make unit-tests
-	make integration-tests
-	make validate
+test: ## Test current connection
+	docker run --rm --tty --volume=`pwd`:/app --workdir=/app golang:1.15.8-buster sh -c "./setup.sh make unit-tests \
+	&& make integration-tests \
+	&& make validate"
 
 unit-tests: ## Run tests to check for HelloHandler coverage
 	hugo
