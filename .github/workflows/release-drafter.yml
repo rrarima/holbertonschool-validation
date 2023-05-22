@@ -1,0 +1,31 @@
+name: release-drafter
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  release-drafter:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install -g release-drafter
+
+      - name: Generate Changelog
+        run: release-drafter
+
+      - name: Update Release
+        run: |
+          gh release create 1.0.1 -F .github/release-drafter/changelog.md
+          gh release upload 1.0.1 module3_task4/awesome-website.zip
+          gh release upload 1.0.1 module3_task4/DEPLOY.md

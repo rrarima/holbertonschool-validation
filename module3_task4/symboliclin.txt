@@ -1,0 +1,7 @@
+ln -s ../.github/workflows/module3_task4.yml ./github-workflow.yml
+
+curl --silent --show-error --user "rrarima:5Z7DyHorCad1zRREg8MqFW1OdE0AyC2aKcn" "https://api.github.com/repos/rrarima/holbertonschool-validation/actions/runs" | jq '.workflow_runs[0] | .name, .head_branch, .conclusion'
+
+curl --silent --show-error --user "rrarima:5Z7DyHorCad1zRREg8MqFW1OdE0AyC2aKcn" "https://api.github.com/repos/rrarima/holbertonschool-validation/actions/runs" | jq '.workflow_runs[0] | .id, .name, .head_branch, .conclusion'
+
+curl --silent --show-error --user "rrarima:5Z7DyHorCad1zRREg8MqFW1OdE0AyC2aKcn" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/rrarima/holbertonschool-validation/actions/runs/5036935250/logs"
