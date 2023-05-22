@@ -1,5 +1,5 @@
 ---
-name: module3_task4
+name: module4_task0
 
 "on":
   push:
@@ -14,14 +14,14 @@ name: module3_task4
 jobs:
   builds:
     permissions: write-all
-    name: module3_task4
+    name: module4_task0
     runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
       - name: installation setup with hugo
         run: |
-          cd module3_task4 &&
+          cd module4_task0 &&
           chmod u+x setup.sh
           sudo ./setup.sh
       - name: check makefile access and execute make
@@ -32,19 +32,19 @@ jobs:
           make run
           make stop
           make clean
-        working-directory: module3_task4
+        working-directory: module4_task0
 
       - name: create zip file with make package
         run: |
-          cd module3_task4 && make package
+          cd module4_task0 && make package
       - name: run tests
         run: |
-          cd module3_task4/awesome-api && make unit-tests
-          cd module3_task4/awesome-api && make integration-tests
-          cd module3_task4 && make validate
+          cd module4_task0/awesome-api && make unit-tests
+          cd module4_task0/awesome-api && make integration-tests
+          cd module4_task0 && make validate
       - name: Package zip file if the tests pass
         run: |
-          cd module3_task4 && make package
+          cd module4_task0 && make package
 
       - name: Upload artifact
         if: ${{ github.ref == 'refs/heads/master' }}
@@ -52,17 +52,17 @@ jobs:
         with:
           name: Save zip file
           path: |
-            module3_task4/awesome-website.zip
+            module4_task0/awesome-website.zip
       - name: make Release.txt
-        run: cat ./module3_task4/DEPLOY.md >> Release.txt
+        run: cat ./module4_task0/DEPLOY.md >> Release.txt
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/1.0.0')
         with:
           files: |
-            module3_task4/awesome-website.zip
-            module3_task4/DEPLOY.md
+            module4_task0/awesome-website.zip
+            module4_task0/DEPLOY.md
           body: |
             # Generate an archive when triggered by a tag
             # How can I check if the app is running
