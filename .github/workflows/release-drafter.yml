@@ -3,7 +3,7 @@ name: release_drafter
 run-name: release_drafter
 "on":
   push:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, synchronize]
 
 permissions:
