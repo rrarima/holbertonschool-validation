@@ -17,18 +17,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '14'
 
       - name: Generate Changelog
-        run: |
-          npm install --save @actions/github-script
-          node -e "
-          const { Octokit } = require('@octokit/rest');
-          const { createChangelog } = require('github-changelog-generator');
+        uses: actions/github-script@v5
+        env:
+          CHANGLOG_TOKEN: ${{ secrets.CHANGLOG_TOKEN }}
+        with:
+          script: |
+            const { Octokit } = require('@octokit/rest');
+            const { createChangelog } = require('github-changelog-generator');
 
-          const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-          createChangelog(octokit, 'OWNER', 'REPO', 'TOKEN');
-          "
+            const octokit = new Octokit({ auth: process.env.CHANGLOG_TOKEN });
+            createChangelog(octokit, context.repo.owner, context.repo.repo);
 
       - name: Update Release
         run: |
