@@ -23,7 +23,7 @@ jobs:
         run: |
           cd module4_task0 &&
           chmod u+x setup.sh
-          sudo ./setup.sh
+          ./setup.sh
       - name: check makefile access and execute make
         run: |
           make help
