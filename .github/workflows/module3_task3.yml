@@ -11,7 +11,6 @@ name: module3_task3
 
 jobs:
   builds:
-    permissions: read-all|write-all
     name: module3_task3
     runs-on: ubuntu-22.04
 
