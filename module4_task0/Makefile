@@ -51,5 +51,5 @@ package:	## Create awesome-website.zip that includes the awesome-api and dist di
 	zip -FSr awesome-website.zip . -i dist/ awesome-api
 
 .SILENT:
-help: ## Display what each command does in makefile
+help: ## Display what each command does
 	cat Makefile | grep '##' | tr -d '##' | head -n -1
