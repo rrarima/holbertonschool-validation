@@ -13,7 +13,6 @@ npm install -g npm@7
 npm install -g markdownlint-cli
 npm install -g markdown-link-check
 
-apt-get remove golang-go
-rm -rf /usr/local/go
-
-rm -rf dist/ 2> /dev/null
+curl /tmp/golangci-lint.deb "https://github.com/golangci/golangci-lint/releases/download/v1.52.2/golangci-lint-1.52.2-linux-amd64.deb"
+dpkg -i /tmp/golangci-lint.deb
+rm -f /tmp/golangci-lint.deb
