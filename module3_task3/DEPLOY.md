@@ -21,3 +21,9 @@ The `module3_task2` workflow automatically packages the awesome-api application 
 For more details, refer to the project's documentation and make sure to meet the specified requirements.
 
 Note: The `awesome-website.zip` file is not committed and is deleted by running `make clean`.
+
+## Release
+
+A Github Release is created with the `tag 1.0.0` and contains the archive
+`awesome-website.zip` along with the content of the file `DEPLOY.md` as text
+for the release.
