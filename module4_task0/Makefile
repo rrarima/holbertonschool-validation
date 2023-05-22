@@ -26,7 +26,7 @@ test: go-build ## Test current connection
 
 unit-tests: ## Run tests to check for HelloHandler coverage
 	hugo
-	touchcoverage-units.out
+	touch coverage-units.out
 
 integration-tests: ## Run tests to check integrations coverage
 	hugo
