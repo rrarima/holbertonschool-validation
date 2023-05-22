@@ -4,7 +4,7 @@ name: release-drafter
 "on":
   push:
     branches:
-      - master
+      - main
 
 jobs:
   release-drafter:
@@ -17,13 +17,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install -g release-drafter
+          node-version: '16'
 
       - name: Generate Changelog
-        run: release-drafter
+        run: |
+          npm install --save @actions/github-script
+          node -e "
+          const { Octokit } = require('@octokit/rest');
+          const { createChangelog } = require('github-changelog-generator');
+
+          const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+          createChangelog(octokit, 'OWNER', 'REPO', 'TOKEN');
+          "
 
       - name: Update Release
         run: |
