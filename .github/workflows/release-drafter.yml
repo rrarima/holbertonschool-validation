@@ -20,7 +20,10 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install --save @octokit/rest
+          npm install --save github-changelog-generator
 
       - name: Generate Changelog
         uses: actions/github-script@v5
