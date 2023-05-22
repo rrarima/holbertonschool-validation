@@ -30,7 +30,6 @@ jobs:
           make build
           make lint
           make run
-          make clean
         working-directory: module4_task0
 
       - name: create zip file with make package
