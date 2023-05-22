@@ -21,8 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: installation setup with hugo
         run: |
-          cd module4_task0 &&
-          chmod u+x setup.sh
+          cd module4_task0
           ./setup.sh
       - name: check makefile access and execute make
         run: |
