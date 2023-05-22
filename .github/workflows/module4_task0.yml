@@ -1,0 +1,45 @@
+---
+  name: module4_task0
+  "on":
+    push:
+    schedule:
+      - cron: '0 0 * * *'
+  
+  jobs:
+    builds:
+      name: module4_task0
+      runs-on: ubuntu-22.04
+  
+      steps:
+        - uses: actions/checkout@v3
+        - name: installation setup with hugo
+          run: |
+            cd module4_task0 &&
+            chmod u+x setup.sh
+            sudo ./setup.sh
+        - name: check makefile access and execute make
+          run: |
+            make help
+            make build
+            make lint
+            make run
+            make stop
+            make clean
+          working-directory: module4_task0
+  
+        - name: create zip file with make package
+          run: |
+            cd module4_task0 && make package
+        - name: run tests
+          run: |
+            cd module4_task0/awesome-api && make unit-tests
+            cd module4_task0/awesome-api && make integration-tests
+            cd module4_task0 && make validate
+        - name: Archive zip file if the tests pass
+          if: ${{github.ref=='refs/heads/master'}}
+          uses: actions/upload-artifact@v3
+          with:
+            name: Save zip file
+            path: module4_task0/awesome-website.zip
+              cd module4_task0&& make package
+  
