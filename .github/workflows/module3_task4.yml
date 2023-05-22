@@ -1,11 +1,13 @@
 ---
 name: module3_task4
+
 "on":
   push:
     branches:
       - master
-    tags:
-      - '1.0.0'
+  pull_request:
+    types:
+      - closed
   schedule:
     - cron: '0 0 * * *'
 
@@ -45,7 +47,7 @@ jobs:
           cd module3_task4 && make package
 
       - name: Upload artifact
-        if: ${{github.ref=='refs/heads/master'}}
+        if: ${{ github.ref == 'refs/heads/master' }}
         uses: actions/upload-artifact@v3
         with:
           name: Save zip file

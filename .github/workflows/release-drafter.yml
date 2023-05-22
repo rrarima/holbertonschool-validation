@@ -1,9 +1,10 @@
+---
 name: release-drafter
 
-on:
-  pull_request:
-    types:
-      - closed
+"on":
+  push:
+    branches:
+      - master
 
 jobs:
   release-drafter:
