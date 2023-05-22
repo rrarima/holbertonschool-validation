@@ -69,20 +69,3 @@ jobs:
             # How do I make a new release using a tag
             # What's in the zip file and how do I open it
             # DEPLOY
-
-      - name: Deploy in Netlify
-        if: |
-          github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
-        uses: nwtgck/actions-netlify@v2.0
-        with:
-          publish-dir: 'module4_task0/dist'
-          production-branch: main
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-          deploy-message: '🚀 Deployed on'
-          github-token: ${{ secrets.CHANGLOG_TOKEN }}
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
