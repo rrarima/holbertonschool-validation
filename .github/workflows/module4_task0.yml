@@ -4,7 +4,7 @@ name: module4_task0
 "on":
   push:
     branches:
-      - master
+      - main
   pull_request:
     types:
       - closed
@@ -45,7 +45,7 @@ jobs:
           cd module4_task0 && make package
 
       - name: Upload artifact
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: actions/upload-artifact@v3
         with:
           name: Save zip file
@@ -71,7 +71,7 @@ jobs:
       - name: Run Netlify
         # statement : pullrequest and branch main
         if: |
-          github.event_name == 'pull_request' || github.ref == 'refs/heads/master'
+          github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v2.0
         with:
           publish-dir: 'module4_task0/dist'
