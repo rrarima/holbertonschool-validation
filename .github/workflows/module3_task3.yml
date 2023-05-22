@@ -5,23 +5,26 @@ name: module3_task3
     branches:
       - master
     tags:
-      - "1.0.0"
+      - '1.0.0'
   schedule:
     - cron: '0 0 * * *'
 
 jobs:
   builds:
+    permissions: write-all
     name: module3_task3
     runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: installation Hugo with script
-        run: cd module3_task3 && chmod u+x setup.sh && ./setup.sh
-
+      - name: installation setup with hugo
+        run: |
+          cd module3_task3 &&
+          chmod u+x setup.sh
+          sudo ./setup.sh
       - name: check makefile access and execute make
         run: |
+          make help
           make build
           make lint
           make run
@@ -30,14 +33,19 @@ jobs:
         working-directory: module3_task3
 
       - name: create zip file with make package
-        run: cd module3_task3 && make package
-
+        run: |
+          cd module3_task3 && make package
       - name: run tests
         run: |
-          cd module3_task3/ && make test
-
+          cd module3_task3/awesome-api && make unit-tests
+          cd module3_task3/awesome-api && make integration-tests
+          cd module3_task3 && make validate
       - name: Package zip file if the tests pass
-        if: ${{github.ref=='refs/heads/main'}}
+        run: |
+          cd module3_task3 && make package
+
+      - name: Upload artifact
+        if: ${{github.ref=='refs/heads/master'}}
         uses: actions/upload-artifact@v3
         with:
           name: Save zip file
@@ -51,8 +59,8 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/1.0.0')
         with:
           files: |
-            awesome-website.zip
-            DEPLOY.md
+            module3_task3/awesome-website.zip
+            module3_task3/DEPLOY.md
           body: |
             # Generate an archive when triggered by a tag
             # How can I check if the app is running
