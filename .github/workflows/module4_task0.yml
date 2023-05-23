@@ -19,24 +19,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set execute permissions on setup.sh
-        run: chmod +x module4_task0/setup.sh
-      - name: Install Hugo Docker
-        run: |
-          sudo apt update && sudo apt upgrade -y
-          curl -L https://github.com/gohugoio/hugo/releases/download/v0.84.0/hugo_extended_0.84.0_Linux-64bit.deb -o hugo.deb
-          sudo apt install ./hugo.deb
-          rm hugo.deb
       - name: installation setup with hugo
         run: |
-          cd module4_task0 &&
-          ./setup.sh
+          cd module4_task0 && ./setup.sh
       - name: check makefile access and execute make
         run: |
-          make help
           make build
           make lint
           make run
+          make clean
         working-directory: module4_task0
 
       - name: create zip file with make package
@@ -44,9 +35,9 @@ jobs:
           cd module4_task0 && make package
       - name: run tests
         run: |
-          cd module4_task0 && make unit-tests && \
-          make integration-tests && \
-          make validate
+            cd module4_task0/awesome-api && make unit-tests
+            cd module4_task0/awesome-api && make integration-tests
+            cd module4_task0 && make validatee
       - name: Package zip file if the tests pass
         run: |
           cd module4_task0 && make package
