@@ -44,10 +44,8 @@ jobs:
           cd module4_task0 && make package
       - name: run tests
         run: |
-          docker run --rm \
-          -v $PWD:/app -w /app golang:1.15.8-buster make unit-tests
-          docker run --rm \
-          -v $PWD:/app -w /app golang:1.15.8-buster make integration-tests
+          cd module4_task0 && make unit-tests
+          cd module4_task0 && make integration-tests
           cd module4_task0 && make validate
       - name: Package zip file if the tests pass
         run: |
