@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get update && sudo apt-get install -y make git zip
+apt-get update && apt-get install -y make git zip
 
 apt-get install -y hugo
 
