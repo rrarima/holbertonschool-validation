@@ -2,7 +2,7 @@ lint: ## lint
 	markdownlint -f DEPLOY.md README.md || true
 
 build: ## Build awesome-api
-	docker run --rm --tty --volume=`pwd`:/app --workdir=/app golang:1.15.8-buster sh -c "./setup.sh make lint \
+	docker run --rm --tty --volume=`pwd`:/app --workdir=/app golang:1.15.8-buster sh -c "chmod +x ./setup.sh &&./setup.sh make lint \
 	&& go mod tidy \
 	&& make check \
 	&& hugo \
