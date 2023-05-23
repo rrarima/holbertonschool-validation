@@ -1,9 +1,6 @@
 #!/bin/bash
 
 apt-get update && apt-get install -y make git zip
-
-apt-get install -y hugo
-
 curl -sL https://deb.nodesource.com/setup_14.x | bash -
 apt-get install -y --no-install-recommends nodejs=14.*
 npm install -g npm@7
