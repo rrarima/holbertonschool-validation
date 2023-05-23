@@ -44,9 +44,9 @@ jobs:
           cd module4_task0 && make package
       - name: run tests
         run: |
-          cd module4_task0 && make unit-tests
-          cd module4_task0 && make integration-tests
-          cd module4_task0 && make validate
+          cd module4_task0 && make unit-tests && \
+          make integration-tests && \
+          make validate
       - name: Package zip file if the tests pass
         run: |
           cd module4_task0 && make package
