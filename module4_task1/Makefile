@@ -55,7 +55,7 @@ package:	## Create awesome-website.zip that includes the awesome-api and dist di
 	zip -FSr awesome-website.zip . -i dist/ awesome-api
 
 build-docker: ## Build Docker image
-	docker build -t awesome:build .
+	docker build -t awesome:build ./.build
 
 .SILENT:
 help: ## Display what each command does
