@@ -28,12 +28,13 @@ test: ## Test current connection
 	&& make validate"
 
 unit-tests: ## Run tests to check for HelloHandler coverage
-	hugo
-	touch coverage-units.out
-
+#	hugo
+#	touch coverage-units.out
+	docker run --rm --tty --volume=`pwd`:/app --workdir=/app golang:1.15.8-buster sh -c "./setup.sh && hugo && touch coverage-units.out"
 integration-tests: ## Run tests to check integrations coverage
-	hugo
-	touch coverage-integrations.out
+#	hugo
+#	touch coverage-integrations.out
+	docker run --rm --tty --volume=`pwd`:/app --workdir=/app golang:1.15.8-buster sh -c "./setup.sh && hugo && touch coverage-integrations.out"
 
 check: ## Check markdown files
 	markdownlint ./content/posts/*.md
