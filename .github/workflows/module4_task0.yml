@@ -1,69 +1,44 @@
----
 name: module4_task0
-
-"on":
+on:
   push:
     branches:
-      - main
-  pull_request:
-    types:
-      - closed
+      - master
   schedule:
-    - cron: '0 0 * * *'
-
+    - cron: "0 0 * * *"
+  pull_request:
+    types: [opened, reopened, edited, ready_for_review]
 jobs:
-  builds:
-    permissions: write-all
-    name: module4_task0
+  module4_task0:
     runs-on: ubuntu-22.04
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup permissions
-        run: chmod +x module4_task0/setup.sh
-      - name: installation setup with hugo
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Hugo
         run: |
-          cd module4_task0 && ./setup.sh
-      - name: check makefile access and execute make
+          cd module4_task0
+          ./setup.sh
+      - name: lint markdownfile
         run: |
-          make build
+          cd module4_task0
           make lint
-          make run
-          make clean
-        working-directory: module4_task0
-
-      - name: create zip file with make package
+      - name: Go into correct directory and execute make targets
         run: |
-          cd module4_task0 && make package
-
-      - name: run tests
-        run: |
-            cd module4_task0/awesome-api && make unit-tests
-            cd module4_task0/awesome-api && make integration-tests
-            cd module4_task0 && make validatee
-            cd module4_task0 && make package
-
-      - name: Create Release
+          cd module4_task0
+          make build
+          make test
+          make package
+          make help
+      - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/1.0.0')
         with:
+          tag_name: 1.0.0
           files: |
             module4_task0/awesome-website.zip
             module4_task0/DEPLOY.md
-
-      - name: Run Netlify
-        if: |
-          github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
-        uses: nwtgck/actions-netlify@v2.0
+      - name: Archive build
+        if: ${{github.ref=='refs/heads/master'}}
+        uses: actions/upload-artifact@v3
         with:
-          publish-dir: 'module4_task0/dist'
-          production-branch: main
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-          deploy-message: 'Deploy from GitHub Action'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
+          name: upload-package
+          path: module4_task0/awesome-website.zip
