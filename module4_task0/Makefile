@@ -1,62 +1,56 @@
-lint: ## lint
-	markdownlint -f DEPLOY.md README.md || true
+GO=go
+TARGET=awesome-api
+RM=rm -rf
+MAKE=make
+COVERAGE=coverage
+HUGO=hugo
 
-# build: ## Build awesome-api (Old version)
-# 	go mod tidy
-# 	make check && hugo && go build -o awesome-api
+build:	## Generate the source code of the application to a binary and generate a static Hugo site
+	$(MAKE) golang-build 
+	$(MAKE) hugo-build 
 
-# Define new sub-targets for Golang and Hugo build phases
-go-build:
-	docker run --rm -v "${PWD}:/app" -w /app golang:1.15.8-buster go mod tidy
-	docker run --rm -v "${PWD}:/app" -w /app golang:1.15.8-buster go build -o awesome-api
+golang-build:	## Generate the source code of the application to a binary.
+	docker run --rm --tty --volume=$$(pwd):/app --workdir=/app golang:1.15.8-buster go build -o $(TARGET)
 
-hugo-build:
-	make check
-	hugo
+hugo-build: ## Generate static Hugo site
+	$(HUGO)
 
-# Redefine build target to use the new sub-targets
-build: go-build hugo-build
+run:	## Run the application in background by executing the binary.
+	./$(TARGET) >./$(TARGET).log 2>&1 &
 
-run: ## Run awesome-api application
-	./awesome-api >./awesome-api.log 2>&1 &
+post:	## Create a new blog post whose filename and title come from the environment variables POST_TITLE and POST_NAME
+	$(HUGO) new posts/$(POST_NAME).md
+	sed -i '2s/.*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
-stop: ## Stop awesome-api application
-	kill $$(pgrep awesome-api) || true
+stop:	## Stop the application.
+	@pkill $(TARGET)
 
-post: ## Create new MarkDown
-	hugo new posts/$(POST_NAME).md
-	sed -i 's/title: "$(POST_NAME)"/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
+clean:	## Stop the application. Delete the binary and the log file.
+	@if pgrep -x $(TARGET) > /dev/null; then \
+		pkill $(TARGET); \
+	fi
+	@$(RM) $(TARGET) $(TARGET).log $(COVERAGE)-units.out $(COVERAGE)-integrations.out dist/ *~ awesome-website.zip
 
-clean: stop ## Clean awesome-api application and log
-	rm -f awesome-api awesome-api.log coverage-units.out coverage-integrations.out go*
-	rm -rf ./dist
+test:	## Test the application.
+	$(MAKE) unit-tests
+	$(MAKE) integration-tests
+	$(MAKE) validate
 
-test: go-build ## Test current connection
-	make unit-tests
-	make integration-tests
-	make validate
+unit-tests: ## Run unit tests
+	docker run --rm --tty --volume=$$(pwd):/app --workdir=/app golang:1.15.8-buster go test -v -short -coverprofile=$(COVERAGE)-units.out
 
-unit-tests: ## Run tests to check for HelloHandler coverage
-	docker run --rm -v "${PWD}:/app" -w /app golang:1.15.8-buster go test -v  -short -coverprofile=coverage-units.out
+integration-tests: ## Run integration tests
+	docker run --rm --tty --volume=$$(pwd):/app --workdir=/app golang:1.15.8-buster go test -v -coverprofile=$(COVERAGE)-integrations.out
 
-integration-tests: ## Run tests to check integrations coverage
-	docker run --rm -v "${PWD}:/app" -w /app golang:1.15.8-buster go test -v -coverprofile=coverage-integrations.out
+validate:	## Validate the file dist/index.html using the command line Holberton’s W3C Validator.
+	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
 
-check: ## Check markdown files
-	markdownlint ./content/posts/*.md
-	find content -name \*.md -print0 | xargs -0 -n1 markdown-link-check
+lint:	## Lint markdown files
+	markdownlint DEPLOY.md
 
-validate: ## Validate HTML with W3C Validator
-	python3 ./w3c_validator.py ./dist/index.html || true
+package: ## Creates a zip file containing awesome-api binary file and dist/ directory
+	zip -R awesome-website.zip dist/
+	zip -u awesome-website.zip awesome-api
 
-# go-build:	## Build API library (Old version)
-# 	go mod init github.com/holbertonschool-validation/tree/main/module3_task2/awesome-api
-# 	go get github.com/gorilla/mux
-# 	go build
-
-package:	## Create awesome-website.zip that includes the awesome-api and dist directory
-	zip -FSr awesome-website.zip . -i dist/ awesome-api
-
-.SILENT:
-help: ## Display what each command does
-	cat Makefile | grep '##' | tr -d '##' | head -n -1
+help:	## Show this help usage.
+	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
