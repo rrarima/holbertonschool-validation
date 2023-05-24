@@ -33,13 +33,17 @@ jobs:
           make run
         working-directory: module4_task0
 
-      - name: run tests and package
+      - name: create zip file with make package
+        run: |
+          cd module4_task0 && make package
+      - name: run tests
         run: |
           cd module4_task0/awesome-api && make unit-tests
           cd module4_task0/awesome-api && make integration-tests
           cd module4_task0 && make validate
+      - name: Package zip file if the tests pass
+        run: |
           cd module4_task0 && make package
-
       - name: Upload artifact
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: actions/upload-artifact@v3
