@@ -1,0 +1,80 @@
+---
+name: module4_task1
+
+"on":
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  builds:
+    permissions: write-all
+    name: module4_task1
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        run: make build-docker
+        working-directory: module4_task1
+
+      - name: installation setup with hugo
+        run: |
+          cd module4_task1 &&
+          ./setup.sh
+      - name: check makefile access and execute make
+        run: |
+          make help
+          make build
+          make lint
+          make run
+        working-directory: module4_task1
+
+      - name: create zip file with make package
+        run: |
+          cd module4_task1 && make package
+      - name: run tests
+        run: |
+          cd module4_task1/awesome-api && make unit-tests
+          cd module4_task1/awesome-api && make integration-tests
+          cd module4_task1 && make validate
+      - name: Package zip file if the tests pass
+        run: |
+          cd module4_task1 && make package
+      - name: Upload artifact
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Save zip file
+          path: |
+            module4_task1/awesome-website.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/1.0.0')
+        with:
+          files: |
+            module4_task1/awesome-website.zip
+            module4_task1/DEPLOY.md
+      - name: Run Netlify
+        if: |
+          github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: "module4_task1/dist"
+          production-branch: main
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+          deploy-message: "Deploy from GitHub Action"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
