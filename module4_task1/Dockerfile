@@ -18,4 +18,7 @@ RUN npm install -g markdownlint-cli@v0.26.0 \
     && npm install -g markdown-link-check@v3.8.6
 
 # Install Golangci-lint
-RUN go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.52.2
+RUN wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.52.2 \
+    && mv ./bin/golangci-lint /usr/local/bin/
+
+
