@@ -26,9 +26,9 @@ jobs:
           ./setup.sh
       - name: check makefile access and execute make
         run: |
+          make build-docker
           make help
           make build
-          make build-docker
           make lint
           make docker-tests
           make run
