@@ -1,0 +1,12 @@
+---
+schemaVersion: '2.0.0'
+fileExistenceTests:
+  - name: 'hugo-check'
+    path: '/usr/local/bin/hugo'
+    shouldExist: true
+  - name: 'npm-check'
+    path: '/usr/local/bin/npm'
+    shouldExist: true
+  - name: 'golangci-lint-check'
+    path: '/usr/local/bin/golangci-lint'
+    shouldExist: true
