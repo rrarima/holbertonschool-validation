@@ -22,11 +22,11 @@ jobs:
 
       - name: Lint Dockerfile
         run: make lint
-        working-directory: module4_task2/.build
+        working-directory: /.build
 
       - name: Run Docker tests
         run: make docker-tests
-        working-directory: module4_task2/.build
+        working-directory: /.build
 
       - name: Build Docker Image
         run: make build-docker
