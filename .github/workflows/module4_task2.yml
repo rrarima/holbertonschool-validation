@@ -20,18 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: make build-docker
-        working-directory: module4_task2
-
-      - name: Lint Dockerfile
-        run: make lint
-        working-directory: module4_task2/.build
-
-      - name: Run Docker tests
-        run: make docker-tests
-        working-directory: module4_task2/.build
-
       - name: installation setup with hugo
         run: |
           cd module4_task2 &&
@@ -40,7 +28,9 @@ jobs:
         run: |
           make help
           make build
+          make build-docker
           make lint
+          make docker-tests
           make run
         working-directory: module4_task2
 
