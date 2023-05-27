@@ -27,6 +27,9 @@ test: ## Test current connection
 	&& make integration-tests \
 	&& make validate"
 
+docker-tests:   ## Test docker image awesome:build
+	docker run --rm -v $(PWD):/app -v /var/run/docker.sock:/var/run/docker.sock -w /app awesome:build container-structure-test test --image awesome:build --config .build/cst.yml
+
 unit-tests: ## Run tests to check for HelloHandler coverage
 #	hugo
 #	touch coverage-units.out
