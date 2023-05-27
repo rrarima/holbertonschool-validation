@@ -22,12 +22,12 @@ jobs:
 
       - name: Lint Dockerfile
         run: |
-          cd module4_task2
+          cd module4_task2/.build
           make lint
 
       - name: Run Docker tests
         run: |
-          cd module4_task2
+          cd module4_task2/.build
           make docker-tests
 
       - name: Build Docker Image
