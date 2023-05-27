@@ -47,7 +47,6 @@ You are a software engineer at "Awesome Inc." working on their web services. You
 - [Installing & Using Themes](https://gohugo.io/themes/installing-and-using-themes/)
 - [Add a help target to a Makefile](https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html)
 
-
 ## Lifecycle of a Hugo Website with Makefile
 
 This guide demonstrates the lifecycle of a Hugo website using a Makefile to automate common tasks.
