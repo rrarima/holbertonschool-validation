@@ -13,3 +13,6 @@ npm install -g npm@7
 
 npm install -g markdownlint-cli@v0.26.0
 npm install -g markdown-link-check@v3.8.6
+
+wget https://github.com/hadolint/hadolint/releases/download/v2.6.0/hadolint-Linux-x86_64 -O /usr/local/bin/hadolint
+chmod +x /usr/local/bin/hadolint

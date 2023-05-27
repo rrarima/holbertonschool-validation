@@ -1,5 +1,5 @@
 lint: ## lint
-	hadolint Dockerfile || true
+	hadolint .build/Dockerfile || true
 	markdownlint -f DEPLOY.md README.md || true
 
 build: ## Build awesome-api

@@ -21,4 +21,7 @@ RUN npm install -g markdownlint-cli@v0.26.0 \
 RUN wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.52.2 \
     && mv ./bin/golangci-lint /usr/local/bin/
 
+# Install Hadolint
+RUN wget https://github.com/hadolint/hadolint/releases/download/v2.6.0/hadolint-Linux-x86_64 -O /usr/local/bin/hadolint \
+    && chmod +x /usr/local/bin/hadolint
 
